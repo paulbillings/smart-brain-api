@@ -1,13 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const bcrypt = require('bcrypt');
+const cors = require('cors');
 
 const app = express();
-app.use(bodyParser.json());
 
-const bcrypt = require('bcrypt');
+app.use(bodyParser.json());
+app.use(cors());
+
 const saltRounds = 10;
-const myPlaintextPassword = 's0/\/\P4$$w0rD';
-const someOtherPlaintextPassword = 'not_bacon';
 
 const database = {
 	users: [
@@ -15,6 +16,7 @@ const database = {
 			id:"123",
 			name: "John",
 			email: "john@gmail.com",
+			password: "cookies",
 			entries: 0,
 			joined: new Date()
 		},
@@ -22,33 +24,23 @@ const database = {
 			id:"124",
 			name: "Sally",
 			email: "sally@gmail.com",
+			password: "bananas",
 			entries: 0,
 			joined: new Date()
-		}
-	],
-	login: [
-		{
-			id: "987",
-			hash: "",
-			email: "john@gmail.com"
 		}
 	]
 }
 
 app.get("/", (req, res) => {
-	res.send(database.users);
+	res.json(database.users);
 })
 
 app.post("/signin", (req, res) => {
-		// Load hash from your password DB.
-	bcrypt.compare(myPlaintextPassword, hash, function(err, res) {
-    	// res == true
-	});
-	bcrypt.compare(someOtherPlaintextPassword, hash, function(err, res) {
-   		// res == false
-	});
-	if (req.body.email === database.user[0].email &&
-		req.body.password === database.user[0].password) {
+	console.log(req.body.email);
+	console.log(req.body.password);
+	console.log(database.users[0].email);
+	if (req.body.email === database.users[0].email &&
+		req.body.password === database.users[0].password) {
 		res.json("success");
 	} else {
 		res.status(400).json("error logging in");
@@ -58,10 +50,6 @@ app.post("/signin", (req, res) => {
 
 app.post("/register", (req, res) => {
 	const { email, name, password } = req.body;
-	bcrypt.hash(password, saltRounds, function(err, hash) {
-  		// Store hash in your password DB.
-  		console.log(hash);
-	});
 	database.users.push({
 		id:"125",
 		name: name,
@@ -103,6 +91,6 @@ app.put("/image", (req, res) => {
 })
 
 
-app.listen(3000, () => {
-	console.log("app is running on port 3000");
+app.listen(3001, () => {
+	console.log("app is running on port 3001");
 })
