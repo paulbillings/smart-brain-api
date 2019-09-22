@@ -36,9 +36,6 @@ app.get("/", (req, res) => {
 })
 
 app.post("/signin", (req, res) => {
-	console.log(req.body.email);
-	console.log(req.body.password);
-	console.log(database.users[0].email);
 	if (req.body.email === database.users[0].email &&
 		req.body.password === database.users[0].password) {
 		res.json("success");
