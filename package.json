@@ -4,7 +4,8 @@
   "description": "smart brain api for zero to mastery course",
   "main": "script.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
   },
   "author": "paul billings",
   "license": "ISC",
