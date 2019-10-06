@@ -30,7 +30,9 @@ app.use(cors());
 
 const saltRounds = 10;
 
-app.get("/", (req, res) => { res.json(database.users) })
+// app.get("/", (req, res) => { res.json(database.users) })
+
+app.get("/", (req, res) => { res.json("it is working!!") })
 
 app.post("/signin", (req, res) => { signin.handleSignin(req, res, db, bcrypt) })
 
